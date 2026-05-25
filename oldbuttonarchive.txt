@@ -1,0 +1,40 @@
+import { useState } from 'react';
+import QuizPage from './pages/whoami.jsx';
+import ParisAdventure from './pages/parisadventure';
+import DailyCheckIn from './pages/DailyCheckIn';
+
+export default function App() {
+  const [page, setPage] = useState('home');
+  const [playerName, setPlayerName] = useState('');
+
+  return (
+    <>
+      {page === 'home' && (
+        <main>
+          <h1>Who Am I</h1>
+          <p>Choose where to begin.</p>
+
+          <button onClick={() => setPage('quiz')}>Part 1</button>
+
+          <button onClick={() => setPage('paris')}>Part 2</button>
+          <button onClick={() => setPage('daily')}>Daily Check In</button>
+        </main>
+      )}
+
+      {page === 'quiz' && (
+        <QuizPage
+          playerName={playerName}
+          setPlayerName={setPlayerName}
+          setPage={setPage}
+        />
+      )}
+
+      {page === 'paris' && (
+        <ParisAdventure playerName={playerName} setPage={setPage} />
+      )}
+      {page === "daily" && (
+        <DailyCheckIn />
+      )}
+    </>
+  );
+}
