@@ -52,7 +52,7 @@ export default function DailyCheckIn() {
       return;
     }
 
-    setMessage("saved successfully 💌");
+    setMessage("ok noted uploaded");
 
     setDescription("");
     setPoem("");
