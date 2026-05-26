@@ -56,7 +56,6 @@ export default function HomePage({ setPage }) {
         <button className="dc-enter-button" onClick={() => setPage('rules')}>
           enter →
         </button>
-      </section>
     </main>
   );
 }
