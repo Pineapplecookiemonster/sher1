@@ -2,27 +2,35 @@ import { useEffect, useState } from 'react';
 
 function getTimeUntil2200() {
   const now = new Date();
-  const target = new Date();
 
-  target.setHours(22, 0, 0, 0);
+  const today2200 = new Date();
+  today2200.setHours(22, 0, 0, 0);
 
-  if (now > target) {
-    target.setDate(target.getDate() + 1);
-  }
+  const tomorrow0600 = new Date();
+  tomorrow0600.setDate(tomorrow0600.getDate() + 1);
+  tomorrow0600.setHours(6, 0, 0, 0);
 
-  const diff = target - now;
-
-  const hours = String(Math.floor(diff / 1000 / 60 / 60)).padStart(2, '0');
-  const minutes = String(Math.floor((diff / 1000 / 60) % 60)).padStart(2, '0');
-  const seconds = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
-
-  if (diff <= 0) {
+  // Between 22:00 and 06:00
+  if (now >= today2200 || now.getHours() < 6) {
     return "time’s up!";
   }
 
+  const diff = today2200 - now;
+
+  const hours = String(
+    Math.floor(diff / 1000 / 60 / 60)
+  ).padStart(2, "0");
+
+  const minutes = String(
+    Math.floor((diff / 1000 / 60) % 60)
+  ).padStart(2, "0");
+
+  const seconds = String(
+    Math.floor((diff / 1000) % 60)
+  ).padStart(2, "0");
+
   return `${hours}:${minutes}:${seconds}`;
 }
-
 export default function HomePage({ setPage }) {
   const hour = new Date().getHours();
   const backgroundClass = hour >= 18 ? 'evening-bg' : 'day-bg';
@@ -54,9 +62,21 @@ export default function HomePage({ setPage }) {
 
         <p className="dc-tagline">wooohoo!</p>
 
-        <button className="dc-enter-button" onClick={() => setPage('rules')}>
-          enter →
-        </button>
+{timeLeft === "time’s up!" ? (
+  <button
+    className="dc-enter-button"
+    onClick={() => setPage("rewards")}
+  >
+    claim reward →
+  </button>
+) : (
+  <button
+    className="dc-enter-button"
+    onClick={() => setPage("rules")}
+  >
+    enter →
+  </button>
+)}
         </section>
     </main>
   );
