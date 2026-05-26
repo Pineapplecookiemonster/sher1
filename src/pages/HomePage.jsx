@@ -6,12 +6,8 @@ function getTimeUntil2200() {
   const today2200 = new Date();
   today2200.setHours(22, 0, 0, 0);
 
-  const tomorrow0600 = new Date();
-  tomorrow0600.setDate(tomorrow0600.getDate() + 1);
-  tomorrow0600.setHours(6, 0, 0, 0);
-
-  // Between 22:00 and 06:00
-  if (now >= today2200 || now.getHours() < 6) {
+  // Between 22:00 and 01:00
+  if (now >= today2200 || now.getHours() < 1) {
     return "time’s up!";
   }
 

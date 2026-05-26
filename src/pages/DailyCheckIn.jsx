@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 
+
 export default function DailyCheckIn() {
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState("");
   const [poem, setPoem] = useState("");
+  const [mood, setMood] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  const moods = ["🌞", "🏕️", "🍷", "❄️", "🥱"];
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -43,6 +47,7 @@ export default function DailyCheckIn() {
           image_url: imageUrl,
           description,
           poem,
+          mood,
         },
       ]);
 
@@ -56,6 +61,7 @@ export default function DailyCheckIn() {
 
     setDescription("");
     setPoem("");
+    setMood("");
     setImage(null);
     setLoading(false);
   }
@@ -65,9 +71,11 @@ export default function DailyCheckIn() {
       className="dc-home"
       style={{
         backgroundImage:
-          'url("https://images.unsplash.com/photo-1499678329028-101435549a4e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
+          'url("https://images.unsplash.com/photo-1707677445122-2b7fe814efcd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
       }}
     >
+{/* https://images.unsplash.com/photo-1499678329028-101435549a4e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D */}
+      
       <div className="dc-upload-overlay" />
 
       <section className="dc-upload-card">
@@ -85,6 +93,23 @@ export default function DailyCheckIn() {
               hidden
             />
           </label>
+
+          <div className="dc-mood-pane">
+  <p className="dc-mood-title">mood</p>
+
+          <div className="dc-mood-row">
+            {moods.map((item) => (
+              <button
+                key={item}
+                type="button"
+                className={`dc-mood-button ${mood === item ? "selected" : ""}`}
+                onClick={() => setMood(item)}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        </div>
 
           <textarea
             className="dc-input"

@@ -1,19 +1,42 @@
+import { useEffect, useState } from "react";
+import { supabase } from "../lib/supabaseClient";
+
 export default function RulesPage({ setPage }) {
+  const [todayCount, setTodayCount] = useState(0);
+
   const hour = new Date().getHours();
   const backgroundClass = hour >= 18 ? "evening-bg" : "day-bg";
+
+  useEffect(() => {
+    async function getTodayCount() {
+      const start = new Date();
+      start.setHours(0, 0, 0, 0);
+
+      const end = new Date();
+      end.setHours(23, 59, 59, 999);
+
+      const { count, error } = await supabase
+        .from("daily_entries")
+        .select("*", { count: "exact", head: true })
+        .gte("created_at", start.toISOString())
+        .lte("created_at", end.toISOString());
+
+      if (!error) {
+        setTodayCount(count || 0);
+      }
+    }
+
+    getTodayCount();
+  }, []);
 
   return (
     <main className={`dc-home ${backgroundClass}`}>
       <section className="dc-rules-card">
-        <h1>challenge rules</h1>
+        <h1>dear sher,  you have:</h1>
 
-        <ol>
-          <li>you must upload a photograph with each post</li>
-          <li>hi bb can you post more captions</li>
-          <li>no need poems if no time</li>
-        </ol>
+        <p className="dc-progress-number">{todayCount}</p>
 
-        <p>complete the challenge to unlock a reward!</p>
+        <p>moments posted today</p>
 
         <button className="dc-enter-button" onClick={() => setPage("daily")}>
           begin →

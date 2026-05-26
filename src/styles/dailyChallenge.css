@@ -1,10 +1,12 @@
 * {
+  font-family: inherit;
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: Inter, Manrope, system-ui, sans-serif;
+  /* font-family: Inter, Manrope, system-ui, sans-serif; */
+  font-family: "Satoshi", sans-serif;
 }
 
 .dc-home {
@@ -33,8 +35,15 @@ body {
 }
 
 .day-bg {
-  background-image: url("https://plus.unsplash.com/premium_photo-1671531113340-beadcd4eb406?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
-}
+  background-image: url("https://images.unsplash.com/photo-1553578827-0df58e305953?q=80&w=664&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+} 
+/* https://plus.unsplash.com/premium_photo-1671531113340-beadcd4eb406?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D */
+
+/* .day-bg {
+  background-image: url("https://i.ibb.co/ynckwPxF/palm-sunset.jpg");
+}  */
+
+
 
 .evening-bg {
   background-image: url("https://scontent.fsin14-1.fna.fbcdn.net/v/t39.30808-6/480700429_1184045280389209_7588684534507542890_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=3672EkPd4qoQ7kNvwEEGFDs&_nc_oc=AdqVJ1_bovVzrUHWhNxV8mC4OZZ0ItDB4k-9qi0mCs-UfMguGtvAHEpIR-zYKKASAtE&_nc_zt=23&_nc_ht=scontent.fsin14-1.fna&_nc_gid=_2-D5oshxx3Zm5jwRKvQmQ&_nc_ss=7b2a8&oh=00_Af5glTxGbLp8-QrFHhxlP4VukH3eNEjnAaMfQn9lB-wkBQ&oe=6A1A6729");
@@ -88,8 +97,8 @@ body {
 
 .dc-countdown {
   font-size: 38px;
-  font-weight: 300;
-  letter-spacing: 0.08em;
+  font-weight: 200;
+  letter-spacing: 0.12em;
 }
 
 .dc-tagline {
@@ -292,4 +301,50 @@ body {
   text-align: center;
   color: white;
   min-height: 20px;
+}
+
+.dc-mood-pane {
+  padding: 14px;
+  border-radius: 24px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+  backdrop-filter: blur(10px);
+}
+
+.dc-mood-title {
+  margin: 0 0 12px;
+  color: rgba(255,255,255,0.78);
+  font-size: 14px;
+  text-align: center;
+}
+
+.dc-mood-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.dc-mood-button {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.24);
+  background: rgba(255,255,255,0.14);
+  font-size: 22px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.dc-mood-button.selected {
+  background: rgba(255,255,255,0.34);
+  transform: scale(1.08);
+}
+
+.dc-progress-number {
+  margin: 18px 0 4px;
+  font-size: 64px;
+  font-weight: 300;
+  line-height: 1;
+  color: white;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
 }
