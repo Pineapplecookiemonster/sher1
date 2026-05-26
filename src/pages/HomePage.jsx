@@ -41,6 +41,7 @@ export default function HomePage({ setPage }) {
     <main className={`dc-home ${backgroundClass}`}>
       <div className="dc-orb-glow" />
 
+        <section className="dc-orbit-card">
       <p className="dc-small-text">
         {timeLeft === "time’s up!"
           ? "challenge complete"
@@ -56,6 +57,9 @@ export default function HomePage({ setPage }) {
         <button className="dc-enter-button" onClick={() => setPage('rules')}>
           enter →
         </button>
+        </section>
     </main>
   );
 }
+
+
