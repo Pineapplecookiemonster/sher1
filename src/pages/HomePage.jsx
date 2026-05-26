@@ -51,7 +51,7 @@ export default function HomePage({ setPage }) {
           <span className="dc-countdown">{timeLeft}</span>
         </div>
 
-        <p className="dc-tagline">keep it up!</p>
+        <p className="dc-tagline">wooohoo!</p>
 
         <button className="dc-enter-button" onClick={() => setPage('rules')}>
           enter →
