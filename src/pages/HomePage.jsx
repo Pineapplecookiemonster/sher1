@@ -16,6 +16,10 @@ function getTimeUntil2200() {
   const minutes = String(Math.floor((diff / 1000 / 60) % 60)).padStart(2, '0');
   const seconds = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
 
+  if (diff <= 0) {
+    return "time’s up!";
+  }
+
   return `${hours}:${minutes}:${seconds}`;
 }
 
@@ -37,8 +41,11 @@ export default function HomePage({ setPage }) {
     <main className={`dc-home ${backgroundClass}`}>
       <div className="dc-orb-glow" />
 
-      <section className="dc-orbit-card">
-        <p className="dc-small-text">challenge ends in</p>
+      <p className="dc-small-text">
+        {timeLeft === "time’s up!"
+          ? "challenge complete"
+          : "challenge ends in"}
+      </p>
 
         <div className="dc-countdown-circle">
           <span className="dc-countdown">{timeLeft}</span>
