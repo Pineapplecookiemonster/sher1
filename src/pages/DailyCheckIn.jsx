@@ -12,26 +12,48 @@ export default function DailyCheckIn() {
 
   const moods = ["🌞", "🏕️", "🍷", "❄️", "🥱"];
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+function withTimeout(promise, ms = 30000) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("upload timed out, please try again")), ms)
+    ),
+  ]);
+}
 
-    if (!image) {
-      setMessage("oi you never upload photograph. u think i don't know");
-      return;
-    }
+async function handleSubmit(e) {
+  e.preventDefault();
 
-    setLoading(true);
+  if (!image) {
+    setMessage("please upload a photograph bb");
+    return;
+  }
 
-    const filePath = `entries/${Date.now()}-${image.name}`;
+  setLoading(true);
+  setMessage("");
+  setMessage("E10_STARTED: preparing upload");
 
-    const { error: uploadError } = await supabase.storage
-      .from("daily-uploads")
-      .upload(filePath, image);
+  try {
+      setMessage(
+    `E11_FILE_SELECTED: ${image.name}, ${Math.round(
+      image.size / 1024 / 1024
+    )}MB, ${image.type}`
+  );
+    const cleanName = image.name
+      .toLowerCase()
+      .replace(/[^a-z0-9.]/g, "-");
+
+    const filePath = `entries/${Date.now()}-${crypto.randomUUID()}-${cleanName}`;
+    setMessage("E12_UPLOAD_STARTED");
+    const { error: uploadError } = await withTimeout(
+      supabase.storage
+        .from("daily-uploads")
+        .upload(filePath, image),
+      30000
+    );
 
     if (uploadError) {
-      setMessage(uploadError.message);
-      setLoading(false);
-      return;
+      throw uploadError;
     }
 
     const { data: publicUrlData } = supabase.storage
@@ -39,32 +61,37 @@ export default function DailyCheckIn() {
       .getPublicUrl(filePath);
 
     const imageUrl = publicUrlData.publicUrl;
-
-    const { error: insertError } = await supabase
-      .from("daily_entries")
-      .insert([
-        {
-          image_url: imageUrl,
-          description,
-          poem,
-          mood,
-        },
-      ]);
+    setMessage("E13_UPLOAD_DONE");
+    setMessage("E14_DATABASE_STARTED");
+    const { error: insertError } = await withTimeout(
+      supabase
+        .from("daily_entries")
+        .insert([
+          {
+            image_url: imageUrl,
+            description,
+            poem,
+            mood,
+          },
+        ]),
+      15000
+    );
 
     if (insertError) {
-      setMessage("save failed");
-      setLoading(false);
-      return;
+      throw insertError;
     }
 
-    setMessage("ok noted uploaded");
-
+    setMessage("saved successfully wooo");
     setDescription("");
     setPoem("");
     setMood("");
     setImage(null);
+  } catch (error) {
+    setMessage(error.message || "save failed, please try again");
+  } finally {
     setLoading(false);
   }
+}
 
   return (
     <main
