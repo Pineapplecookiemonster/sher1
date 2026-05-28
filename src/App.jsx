@@ -3,10 +3,10 @@ import HomePage from './pages/HomePage';
 import RulesPage from './pages/RulesPage';
 import DailyCheckIn from './pages/DailyCheckIn';
 import './styles/dailyChallenge.css';
-import RewardsPage from "./pages/RewardsPage";
-import VideoPage from "./pages/VideoPage";
 import Jokes from "./pages/Jokes";
 import JokeLanding from "./pages/JokeLanding";
+import AdminPage from "./pages/AdminPage";
+import SherApp from "./pages/SherApp";
 
 export default function App() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -18,11 +18,11 @@ export default function App() {
     <>
       {page === 'home' && <HomePage setPage={setPage} />}
       {page === 'rules' && <RulesPage setPage={setPage} />}
-      {page === 'daily' && <DailyCheckIn />}
-      {page === "rewards" && <RewardsPage setPage={setPage} />}
-      {page === "video" && <VideoPage />}
+      {page === 'daily' && <DailyCheckIn setPage={setPage}/>}
       {page === "jokes" && <Jokes setPage={setPage}/>}
       {page === "jokelanding" && <JokeLanding setPage={setPage} />}
+      {page === "admin" && <AdminPage setPage={setPage}/>}
+      {page === "sherapp" && <SherApp setPage={setPage} />}
     </>
   );
 }

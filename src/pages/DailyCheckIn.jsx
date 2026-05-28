@@ -2,7 +2,7 @@ import { useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 
 
-export default function DailyCheckIn() {
+export default function DailyCheckIn({ setPage }) {
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState("");
   const [poem, setPoem] = useState("");
@@ -104,7 +104,12 @@ async function handleSubmit(e) {
 {/* https://images.unsplash.com/photo-1499678329028-101435549a4e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D */}
       
       <div className="dc-upload-overlay" />
-
+      <button
+  className="dc-back-button"
+  onClick={() => setPage("sherapp")}
+>
+  ← 
+</button>
       <section className="dc-upload-card">
         <p className="dc-upload-title">moo moo </p>
 

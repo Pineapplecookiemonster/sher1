@@ -79,7 +79,7 @@ export default function JokeLanding({ setPage }) {
       </button>
 
             {setPage && (
-              <button className="home-button-landing" onClick={() => setPage("home")}>
+              <button className="home-button-landing" onClick={() => setPage("sherapp")}>
                 Return home
               </button>
             )}

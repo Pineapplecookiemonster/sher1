@@ -1,0 +1,613 @@
+.sher-app-page,
+.sher-app-page * {
+  box-sizing: border-box;
+}
+
+.sher-app-page {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 18px 16px 22px;
+
+  display: flex;
+  justify-content: center;
+
+  font-family:
+    ui-rounded,
+    "SF Pro Rounded",
+    "Avenir Next",
+    "Trebuchet MS",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  transition:
+    background 220ms ease,
+    color 220ms ease;
+}
+
+.sher-app-page.day {
+  color: #253322;
+  background:
+    radial-gradient(circle at 50% -8%, rgba(255, 222, 142, 0.42), transparent 36%),
+    linear-gradient(180deg, #fff8ea 0%, #f3e7d2 100%);
+}
+
+.sher-app-page.night {
+  color: #f7efe7;
+  background:
+    radial-gradient(circle at 50% -8%, rgba(154, 148, 236, 0.22), transparent 38%),
+    linear-gradient(180deg, #171b31 0%, #211f35 100%);
+}
+
+.sher-app-shell {
+  width: min(410px, 100%);
+}
+
+/* HEADER */
+
+.sher-app-header {
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.sher-app-title {
+  margin: 0;
+
+  font-size: 1.75rem;
+  line-height: 1;
+  font-weight: 780;
+  letter-spacing: -0.055em;
+  text-transform: lowercase;
+}
+
+/* HERO */
+
+.sher-hero-card {
+  margin-bottom: 14px;
+  padding: 14px;
+  border-radius: 32px;
+}
+
+.day .sher-hero-card {
+  background: rgba(255, 255, 255, 0.42);
+  border: 1px solid rgba(91, 109, 72, 0.1);
+  box-shadow: 0 18px 48px rgba(89, 62, 32, 0.075);
+}
+
+.night .sher-hero-card {
+  background: rgba(255, 255, 255, 0.052);
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.18);
+}
+
+.sher-hero-copy {
+  padding: 2px 8px 14px;
+  text-align: center;
+}
+
+.sher-app-greeting {
+  margin: 0;
+
+  font-size: clamp(2.15rem, 9vw, 2.75rem);
+  line-height: 0.94;
+  font-weight: 780;
+  letter-spacing: -0.075em;
+}
+
+.sher-app-time {
+  margin: 10px 0 0;
+
+  font-size: 0.9rem;
+  font-weight: 620;
+  letter-spacing: -0.015em;
+  opacity: 0.62;
+}
+
+/* GRAPHIC AREA */
+
+.time-graphic-card {
+  position: relative;
+  min-height: 286px;
+  border-radius: 28px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.time-graphic-card::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 42%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.day .time-graphic-card::after {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 248, 234, 0) 0%,
+    rgba(255, 248, 234, 0.2) 42%,
+    rgba(255, 248, 234, 0.52) 100%
+  );
+}
+
+.night .time-graphic-card::after {
+  background: linear-gradient(
+    180deg,
+    rgba(23, 27, 49, 0) 0%,
+    rgba(23, 27, 49, 0.22) 42%,
+    rgba(23, 27, 49, 0.58) 100%
+  );
+}
+
+.time-graphic-svg {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: block;
+}
+
+/* VIBE BOXES */
+
+.vibe-panel {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  z-index: 2;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+
+.vibe-card {
+  min-height: 84px;
+  padding: 12px 13px;
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.day .vibe-card {
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(94, 111, 75, 0.12);
+  box-shadow: 0 14px 30px rgba(82, 61, 34, 0.09);
+}
+
+.night .vibe-card {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.17);
+}
+
+.vibe-label {
+  font-size: 0.64rem;
+  line-height: 1;
+  font-weight: 760;
+  letter-spacing: 0.065em;
+  text-transform: lowercase;
+  opacity: 0.6;
+}
+
+.vibe-text {
+  margin-top: 10px;
+
+  font-size: 1.02rem;
+  line-height: 1.05;
+  font-weight: 780;
+  letter-spacing: -0.04em;
+
+  overflow-wrap: anywhere;
+}
+
+/* MENU CARDS */
+
+.sher-app-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.sher-app-card {
+  min-height: 68px;
+  border: 0;
+  border-radius: 22px;
+  padding: 12px 13px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font: inherit;
+  cursor: pointer;
+
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
+}
+
+.day .sher-app-card {
+  background: rgba(255, 255, 255, 0.58);
+  color: #253322;
+  box-shadow: 0 12px 26px rgba(83, 61, 32, 0.065);
+}
+
+.night .sher-app-card {
+  background: rgba(255, 255, 255, 0.078);
+  color: #f7efe7;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.13);
+}
+
+.sher-app-card:hover {
+  transform: translateY(-2px);
+}
+
+.sher-app-card:active {
+  transform: translateY(0);
+}
+
+.card-icon {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 14px;
+}
+
+.day .card-icon {
+  background: rgba(48, 77, 52, 0.075);
+}
+
+.night .card-icon {
+  background: rgba(255, 255, 255, 0.095);
+}
+
+.card-icon svg {
+  width: 19px;
+  height: 19px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.85;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  opacity: 0.78;
+}
+
+.card-label {
+  font-size: 0.96rem;
+  line-height: 1;
+  font-weight: 760;
+  letter-spacing: -0.035em;
+  text-transform: lowercase;
+}
+
+/* SET VIBE BUTTON */
+
+.sher-app-footer {
+  padding-top: 16px;
+
+  display: flex;
+  justify-content: center;
+}
+
+.set-vibe-button {
+  width: min(168px, 58%);
+  min-height: 42px;
+
+  border: 0;
+  border-radius: 999px;
+  padding: 0 18px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 780;
+  letter-spacing: -0.025em;
+
+  cursor: pointer;
+
+  transition:
+    transform 160ms ease,
+    opacity 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.day .set-vibe-button {
+  background: #304d34;
+  color: #fff8ea;
+  box-shadow: 0 12px 24px rgba(48, 77, 52, 0.17);
+}
+
+.night .set-vibe-button {
+  background: #f7efe7;
+  color: #20233d;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+}
+
+.set-vibe-button:hover {
+  transform: translateY(-1px);
+}
+
+.set-vibe-button:active {
+  transform: translateY(0);
+}
+
+.set-vibe-icon {
+  width: 16px;
+  height: 16px;
+
+  display: grid;
+  place-items: center;
+}
+
+.set-vibe-icon svg {
+  width: 16px;
+  height: 16px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* MODALS */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+
+  padding: 20px;
+
+  display: grid;
+  place-items: center;
+
+  background: rgba(18, 22, 22, 0.34);
+
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.modal-card {
+  width: min(330px, 100%);
+  padding: 24px;
+  border-radius: 28px;
+
+  text-align: center;
+
+  background: #fff8ea;
+  color: #253322;
+
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+}
+
+.modal-card p {
+  margin: 0 0 18px;
+
+  font-size: 1rem;
+  font-weight: 760;
+  letter-spacing: -0.025em;
+}
+
+.vibe-editor-card {
+  text-align: left;
+}
+
+.vibe-editor-title {
+  display: block;
+  margin-bottom: 12px;
+
+  font-size: 1.3rem;
+  line-height: 1.05;
+  font-weight: 780;
+  letter-spacing: -0.055em;
+}
+
+.vibe-editor-input {
+  width: 100%;
+  height: 46px;
+
+  border: 1px solid rgba(37, 51, 34, 0.15);
+  border-radius: 16px;
+  padding: 0 14px;
+
+  background: rgba(255, 255, 255, 0.7);
+  color: #253322;
+
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 650;
+
+  outline: none;
+}
+
+.vibe-editor-input:focus {
+  border-color: rgba(48, 77, 52, 0.52);
+  box-shadow: 0 0 0 4px rgba(48, 77, 52, 0.09);
+}
+
+.modal-actions {
+  margin-top: 16px;
+
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-primary,
+.modal-secondary {
+  min-height: 40px;
+
+  border: 0;
+  border-radius: 999px;
+  padding: 0 17px;
+
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 780;
+  letter-spacing: -0.025em;
+
+  cursor: pointer;
+}
+
+.modal-primary {
+  background: #304d34;
+  color: #fff8ea;
+}
+
+.modal-secondary {
+  background: rgba(37, 51, 34, 0.08);
+  color: #253322;
+}
+
+/* MOBILE TUNING */
+
+@media (max-width: 390px) {
+  .sher-app-page {
+    padding: 16px 13px 20px;
+  }
+
+  .sher-app-shell {
+    width: 100%;
+  }
+
+  .sher-app-header {
+    margin-bottom: 12px;
+  }
+
+  .sher-app-title {
+    font-size: 1.62rem;
+  }
+
+  .sher-hero-card {
+    padding: 12px;
+    border-radius: 29px;
+    margin-bottom: 12px;
+  }
+
+  .sher-hero-copy {
+    padding-bottom: 12px;
+  }
+
+  .sher-app-greeting {
+    font-size: 2.15rem;
+  }
+
+  .sher-app-time {
+    font-size: 0.86rem;
+  }
+
+  .time-graphic-card {
+    min-height: 270px;
+    border-radius: 25px;
+  }
+
+  .vibe-panel {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    gap: 8px;
+  }
+
+  .vibe-card {
+    min-height: 78px;
+    padding: 11px 12px;
+    border-radius: 18px;
+  }
+
+  .vibe-label {
+    font-size: 0.6rem;
+  }
+
+  .vibe-text {
+    font-size: 0.96rem;
+  }
+
+  .sher-app-grid {
+    gap: 9px;
+  }
+
+  .sher-app-card {
+    min-height: 64px;
+    border-radius: 20px;
+    padding: 11px 12px;
+    gap: 9px;
+  }
+
+  .card-icon {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+    border-radius: 13px;
+  }
+
+  .card-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .card-label {
+    font-size: 0.92rem;
+  }
+
+  .set-vibe-button {
+    width: min(158px, 60%);
+    min-height: 40px;
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 340px) {
+  .sher-app-page {
+    padding-inline: 10px;
+  }
+
+  .sher-app-greeting {
+    font-size: 1.95rem;
+  }
+
+  .time-graphic-card {
+    min-height: 252px;
+  }
+
+  .vibe-card {
+    min-height: 74px;
+    padding: 10px;
+  }
+
+  .vibe-text {
+    font-size: 0.9rem;
+  }
+
+  .sher-app-card {
+    min-height: 60px;
+    padding: 10px;
+  }
+
+  .card-label {
+    font-size: 0.88rem;
+  }
+}
