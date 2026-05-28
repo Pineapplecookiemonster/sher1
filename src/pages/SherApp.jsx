@@ -238,7 +238,7 @@ export default function SherApp({ setPage, josephVibeFromAdmin }) {
 
   const josephVibe =
   josephVibeFromAdmin || getDailyJosephVibe(sherTime.dateKey, sherTime.hour);
-  
+
   function handleUnavailableClick() {
     setShowUnavailable(true);
   }
@@ -318,7 +318,7 @@ export default function SherApp({ setPage, josephVibeFromAdmin }) {
             <span className="card-icon">
               <IconStories />
             </span>
-            <span className="card-label">Stories</span>
+            <span className="card-label">Poetry</span>
           </button>
         </section>
 

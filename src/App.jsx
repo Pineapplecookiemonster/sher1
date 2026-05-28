@@ -5,7 +5,7 @@ import DailyCheckIn from './pages/DailyCheckIn';
 import './styles/dailyChallenge.css';
 import Jokes from "./pages/Jokes";
 import JokeLanding from "./pages/JokeLanding";
-import AdminPage from "./pages/AdminPage";
+import MomentPage from "./pages/momentPage";
 import SherApp from "./pages/SherApp";
 
 export default function App() {
@@ -21,7 +21,7 @@ export default function App() {
       {page === 'daily' && <DailyCheckIn setPage={setPage}/>}
       {page === "jokes" && <Jokes setPage={setPage}/>}
       {page === "jokelanding" && <JokeLanding setPage={setPage} />}
-      {page === "admin" && <AdminPage setPage={setPage}/>}
+      {page === "moment" && <MomentPage setPage={setPage}/>}
       {page === "sherapp" && <SherApp setPage={setPage} />}
     </>
   );

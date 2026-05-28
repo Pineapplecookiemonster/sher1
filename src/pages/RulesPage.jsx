@@ -32,15 +32,27 @@ export default function RulesPage({ setPage }) {
   return (
     <main className={`dc-home ${backgroundClass}`}>
       <section className="dc-rules-card">
-        <h1>dear sher,  you have:</h1>
+        <h1>we have:</h1>
 
         <p className="dc-progress-number">{todayCount}</p>
 
         <p>moments posted today</p>
 
-        <button className="dc-enter-button" onClick={() => setPage("daily")}>
-          begin →
-        </button>
+        <div className="dc-rules-actions">
+          <button
+            className="dc-enter-button"
+            onClick={() => setPage("daily")}
+          >
+            post →
+          </button>
+
+          <button
+            className="dc-secondary-button"
+            onClick={() => setPage("moment")}
+          >
+            view moments
+          </button>
+        </div>
       </section>
     </main>
   );
