@@ -12,7 +12,7 @@ export default function App() {
   const urlParams = new URLSearchParams(window.location.search);
   const testPage = urlParams.get("page");
 
-  const [page, setPage] = useState(testPage || "home");
+  const [page, setPage] = useState(testPage || "sherapp");
 
   return (
     <>
