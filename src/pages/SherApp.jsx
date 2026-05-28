@@ -50,7 +50,7 @@ function getGreeting(hour) {
   return "Good evening";
 }
 
-function getDailyJosephVibe(dateKey) {
+function getDailyJosephVibe(dateKey, hour) {
   const josephVibes = [
     "rounding",
     "skydiver 123",
@@ -61,7 +61,11 @@ function getDailyJosephVibe(dateKey) {
     "chagee feeling",
   ];
 
-  const seed = dateKey
+  const twoHourBlock = Math.floor(hour / 2);
+
+  const seedString = `${dateKey}-${twoHourBlock}`;
+
+  const seed = seedString
     .split("")
     .reduce((total, character) => total + character.charCodeAt(0), 0);
 
@@ -233,8 +237,8 @@ export default function SherApp({ setPage, josephVibeFromAdmin }) {
   const greeting = getGreeting(sherTime.hour);
 
   const josephVibe =
-    josephVibeFromAdmin || getDailyJosephVibe(sherTime.dateKey);
-
+  josephVibeFromAdmin || getDailyJosephVibe(sherTime.dateKey, sherTime.hour);
+  
   function handleUnavailableClick() {
     setShowUnavailable(true);
   }
