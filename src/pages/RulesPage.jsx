@@ -30,9 +30,15 @@ export default function RulesPage({ setPage }) {
   }, []);
 
   return (
-    <main className={`dc-home ${backgroundClass}`}>
+      <main className={`dc-home ${backgroundClass}`}>
+    <button
+      className="dc-back-button"
+      onClick={() => setPage("sherapp")}
+    >
+      ←
+    </button>
       <section className="dc-rules-card">
-        <h1>we have:</h1>
+        <h1></h1>
 
         <p className="dc-progress-number">{todayCount}</p>
 

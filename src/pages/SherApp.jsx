@@ -216,11 +216,12 @@ function IconEdit() {
 
 export default function SherApp({ setPage, josephVibeFromAdmin }) {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [sherVibe, setSherVibe] = useState("hornz");
-  const [draftVibe, setDraftVibe] = useState("slow morning");
+  const [sherVibe, setSherVibe] = useState("kangaroo poet");
+  const [draftVibe, setDraftVibe] = useState("");
   const [showUnavailable, setShowUnavailable] = useState(false);
   const [showVibeEditor, setShowVibeEditor] = useState(false);
-
+  const [showNotifications, setShowNotifications] = useState(false);
+  
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
@@ -238,6 +239,60 @@ export default function SherApp({ setPage, josephVibeFromAdmin }) {
 
   const josephVibe =
   josephVibeFromAdmin || getDailyJosephVibe(sherTime.dateKey, sherTime.hour);
+
+const manualNotifications = [
+  {
+    id: "30/5",
+    // title: "new story available",
+    text: "1. poetry section now available",
+  },
+];
+
+const automaticNotifications = [];
+
+if (sherTime.hour >= 22 || sherTime.hour < 6) {
+  automaticNotifications.push({
+    // id: "auto-night-1",
+    // title: "night mode active",
+    // text: "the app has entered its evening mode",
+  });
+}
+
+const defaultNotifications = [
+  ...manualNotifications,
+  ...automaticNotifications,
+];
+
+const [readNotifications, setReadNotifications] = useState(() => {
+  const saved = localStorage.getItem("readNotifications");
+  return saved ? JSON.parse(saved) : [];
+});
+
+const unreadNotifications = defaultNotifications.filter(
+  (notification) => !readNotifications.includes(notification.id)
+);
+
+function markNotificationsAsRead() {
+  const allNotificationIds = defaultNotifications.map(
+    (notification) => notification.id
+  );
+
+
+  setReadNotifications(allNotificationIds);
+
+
+  localStorage.setItem(
+    "readNotifications",
+    JSON.stringify(allNotificationIds)
+  );
+}
+
+function resetNotifications() {
+  localStorage.removeItem("readNotifications");
+  setReadNotifications([]);
+}
+
+
 
   function handleUnavailableClick() {
     setShowUnavailable(true);
@@ -262,6 +317,21 @@ export default function SherApp({ setPage, josephVibeFromAdmin }) {
   return (
     <main className={`sher-app-page ${isNight ? "night" : "day"}`}>
       <div className="sher-app-shell">
+              <button
+        className="notification-button"
+        onClick={() => setShowNotifications(true)}
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M12 4a4 4 0 0 0-4 4v2.5c0 .8-.3 1.6-.8 2.2L6 14h12l-1.2-1.3a3.3 3.3 0 0 1-.8-2.2V8a4 4 0 0 0-4-4z" />
+  <path d="M10 18a2 2 0 0 0 4 0" />
+</svg>
+
+        {unreadNotifications.length > 0 && (
+          <span className="notification-badge">
+            {unreadNotifications.length}
+          </span>
+        )}
+      </button>
         <header className="sher-app-header">
           <h1 className="sher-app-title">sher app ™</h1>
         </header>
@@ -292,34 +362,38 @@ export default function SherApp({ setPage, josephVibeFromAdmin }) {
         </section>
 
         <section className="sher-app-grid" aria-label="Sher app pages">
-          <button onClick={handleUnavailableClick} className="sher-app-card">
-            <span className="card-icon">
-              <IconCalendar />
-            </span>
-            <span className="card-label">Calendar</span>
-          </button>
-
-          <button onClick={handleUnavailableClick} className="sher-app-card">
-            <span className="card-icon">
-              <IconVideo />
-            </span>
-            <span className="card-label">Videos</span>
-          </button>
-
-          <button onClick={() => setPage("rules")} className="sher-app-card">
+            <button onClick={() => setPage("rules")} className="sher-app-card">
             <span className="card-icon">
               <IconJournal />
             </span>
             <span className="card-label">Journal</span>
           </button>
 
-          {/* <button onClick={() => setPage("jokelanding")} className="sher-app-card"> */}
-            <button onClick={handleUnavailableClick} className="sher-app-card">
+          <button onClick={() => setPage("jokelanding")} className="sher-app-card">
+            {/* <button onClick={handleUnavailableClick} className="sher-app-card"> */}
             <span className="card-icon">
               <IconStories />
             </span>
             <span className="card-label">Poetry</span>
           </button>
+          
+          <button onClick={handleUnavailableClick} className="sher-app-card">
+            <span className="card-icon">
+              <IconCalendar />
+            </span>
+            <span className="card-label">--</span>
+          </button>
+
+          <button onClick={handleUnavailableClick} className="sher-app-card">
+            <span className="card-icon">
+              <IconVideo />
+            </span>
+            <span className="card-label">--</span>
+          </button>
+
+
+
+  
         </section>
 
         <footer className="sher-app-footer">
@@ -331,6 +405,61 @@ export default function SherApp({ setPage, josephVibeFromAdmin }) {
           </button>
         </footer>
       </div>
+
+
+      {showNotifications && (
+  <div
+    className="modal-backdrop"
+    onClick={() => setShowNotifications(false)}
+  >
+    <div
+      className="modal-card notification-panel"
+      onClick={(event) => event.stopPropagation()}
+    >
+      <h2 className="notification-title">notifications</h2>
+
+      {defaultNotifications.length === 0 ? (
+        <p className="notification-empty">nothing new</p>
+      ) : (
+        <div className="notification-list">
+          {defaultNotifications.map((notification) => (
+            <div
+              key={notification.id}
+              className="notification-item"
+            >
+              <strong>{notification.title}</strong>
+              <span>{notification.text}</span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <div className="modal-actions">
+        <button
+          type="button"
+          className="modal-secondary"
+          onClick={resetNotifications}
+        >
+          reset
+        </button>
+
+        <button
+          type="button"
+          className="modal-primary"
+          onClick={() => {
+            markNotificationsAsRead();
+            setShowNotifications(false);
+          }}
+        >
+          close
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+
+
 
       {showUnavailable && (
         <div

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "../styles/Jokes.css";
 
 const STORAGE_KEY = "jokeStoryIndex";
-
+// resetJokes()
 export default function Jokes({ setPage }) {
   const [stories, setStories] = useState([]);
   const [storyIndex, setStoryIndex] = useState(0);
@@ -34,10 +34,15 @@ export default function Jokes({ setPage }) {
   }, []);
 
   useEffect(() => {
-    window.resetJokeStories = function () {
+    window.resetJokes = function () {
       localStorage.removeItem(STORAGE_KEY);
       location.reload();
     };
+    
+  return () => {
+    delete window.resetJokes;
+  };
+    
   }, []);
 
   if (stories.length === 0) {
@@ -56,18 +61,17 @@ function goNext() {
     setStep(nextStep);
     setFade(true);
 
-    if (nextStep === currentStory.length - 1) {
+   if (nextStep === currentStory.length - 1) {
+      const nextIndex = (storyIndex + 1) % stories.length;
+
+      localStorage.setItem(STORAGE_KEY, String(nextIndex));
       localStorage.setItem("jokeLastReadAt", String(Date.now()));
     }
   }, 220);
 }
+
   function rateStory(star) {
     setRating(star);
-
-    const nextIndex = (storyIndex + 1) % stories.length;
-    localStorage.setItem(STORAGE_KEY, String(nextIndex));
-    localStorage.setItem("jokeLastReadAt", String(Date.now()));
-    
   }
 
   return (

@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import "../styles/JokeLanding.css";
 
 const START_HOUR = 0; // 8pm
-const COOLDOWN_MINUTES = 10;
-
+const COOLDOWN_MINUTES = 150;
+// resetJokeStories()
 function getTodayStartTime() {
   const start = new Date();
   start.setHours(START_HOUR, 0, 0, 0);
@@ -13,23 +13,30 @@ function getTodayStartTime() {
 function getUnlockTime() {
   const lastReadAt = localStorage.getItem("jokeLastReadAt");
 
-  if (lastReadAt) {
-    return new Date(Number(lastReadAt) + COOLDOWN_MINUTES * 60 * 1000);
+  if (!lastReadAt) {
+    return new Date(); // available immediately
   }
 
-  return getTodayStartTime();
+  return new Date(
+    Number(lastReadAt) + COOLDOWN_MINUTES * 60 * 1000
+  );
 }
 
 function formatTimeLeft(ms) {
-  if (ms <= 0) return "00:00";
+  if (ms <= 0) return "ready";
 
   const totalSeconds = Math.floor(ms / 1000);
-  const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
-  const seconds = String(totalSeconds % 60).padStart(2, "0");
 
-  return `${minutes}:${seconds}`;
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  if (hours > 0) {
+    return `${hours}h ${minutes}m`;
+  }
+
+  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
-
 export default function JokeLanding({ setPage }) {
   const [timeLeft, setTimeLeft] = useState("");
   const [isUnlocked, setIsUnlocked] = useState(false);
@@ -44,6 +51,14 @@ export default function JokeLanding({ setPage }) {
       setTimeLeft(formatTimeLeft(diff));
     }
 
+      window.resetJokes = function () {
+      localStorage.removeItem("jokeStoryIndex");
+      localStorage.removeItem("jokeLastReadAt");
+      location.reload();
+    };
+
+
+
     updateTimer();
 
     const timer = setInterval(updateTimer, 1000);
@@ -54,7 +69,7 @@ export default function JokeLanding({ setPage }) {
   return (
     <div className="joke-landing-page">
       <div className="joke-landing-content">
-        <p className="joke-landing-label">next story in</p>
+        <p className="joke-landing-label">next poem in</p>
 
         <h1 className="joke-landing-timer">
           {isUnlocked ? "ready" : timeLeft}
@@ -62,8 +77,8 @@ export default function JokeLanding({ setPage }) {
 
         <p className="joke-landing-subtitle">
           {isUnlocked
-            ? "a new ridiculous chapter awaits"
-            : "unlocking soon"}
+            ? "literary works await"
+            : "stay tuned!"}
         </p>
 
         
