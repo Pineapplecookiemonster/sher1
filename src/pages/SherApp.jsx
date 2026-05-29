@@ -244,19 +244,19 @@ const manualNotifications = [
   {
     id: "30/5",
     // title: "new story available",
-    text: "1. poetry section now available",
+    text: "poetry section now available",
   },
 ];
 
 const automaticNotifications = [];
 
-if (sherTime.hour >= 22 || sherTime.hour < 6) {
-  automaticNotifications.push({
-    // id: "auto-night-1",
-    // title: "night mode active",
-    // text: "the app has entered its evening mode",
-  });
-}
+// if (sherTime.hour >= 22 || sherTime.hour < 6) {
+//   automaticNotifications.push({
+//     // id: "auto-night-1",
+//     // title: "night mode active",
+//     // text: "the app has entered its evening mode",
+//   });
+// }
 
 const defaultNotifications = [
   ...manualNotifications,
@@ -435,13 +435,7 @@ function resetNotifications() {
       )}
 
       <div className="modal-actions">
-        <button
-          type="button"
-          className="modal-secondary"
-          onClick={resetNotifications}
-        >
-          reset
-        </button>
+
 
         <button
           type="button"
