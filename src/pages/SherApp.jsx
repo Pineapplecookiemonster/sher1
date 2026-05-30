@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import "../styles/SherApp.css";
+import { supabase } from "../lib/supabaseClient";
 
 const SHER_TIME_ZONE = "Asia/Singapore";
 
@@ -214,9 +215,10 @@ function IconEdit() {
   );
 }
 
-export default function SherApp({ setPage, josephVibeFromAdmin }) {
+export default function SherApp({ setPage }) {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [sherVibe, setSherVibe] = useState("kangaroo poet");
+  const [sherVibe, setSherVibe] = useState("loading...");
+  const [josephVibe, setJosephVibe] = useState("loading...");
   const [draftVibe, setDraftVibe] = useState("");
   const [showUnavailable, setShowUnavailable] = useState(false);
   const [showVibeEditor, setShowVibeEditor] = useState(false);
@@ -230,6 +232,30 @@ export default function SherApp({ setPage, josephVibeFromAdmin }) {
     return () => clearInterval(timer);
   }, []);
 
+useEffect(() => {
+  async function loadVibes() {
+    const { data, error } = await supabase
+      .from("sher_app_vibes")
+      .select("person, vibe")
+      .in("person", ["sher", "joseph"]);
+
+    if (error) {
+      console.error("Error loading vibes:", error);
+      setSherVibe("not set yet");
+      setJosephVibe("quiet chaos");
+      return;
+    }
+
+    const sherRow = data.find((row) => row.person === "sher");
+    const josephRow = data.find((row) => row.person === "joseph");
+
+    setSherVibe(sherRow?.vibe || "not set yet");
+    setJosephVibe(josephRow?.vibe || "quiet chaos");
+  }
+
+  loadVibes();
+}, []);
+
   const sherTime = useMemo(() => {
     return getSherTimeInfo(currentTime);
   }, [currentTime]);
@@ -237,12 +263,10 @@ export default function SherApp({ setPage, josephVibeFromAdmin }) {
   const isNight = sherTime.hour >= 18 || sherTime.hour < 6;
   const greeting = getGreeting(sherTime.hour);
 
-  const josephVibe =
-  josephVibeFromAdmin || getDailyJosephVibe(sherTime.dateKey, sherTime.hour);
 
 const manualNotifications = [
   {
-    id: "30/5",
+    id: "30/5 part2",
     // title: "new story available",
     text: "poetry section now available",
   },
@@ -303,16 +327,32 @@ function resetNotifications() {
     setShowVibeEditor(true);
   }
 
-  function saveSherVibe(event) {
-    event.preventDefault();
+async function saveSherVibe(event) {
+  event.preventDefault();
 
-    const cleanedVibe = draftVibe.trim();
+  const cleanedVibe = draftVibe.trim();
 
-    if (!cleanedVibe) return;
+  if (!cleanedVibe) return;
 
-    setSherVibe(cleanedVibe);
-    setShowVibeEditor(false);
+  const { error } = await supabase
+    .from("sher_app_vibes")
+    .upsert(
+      {
+        person: "sher",
+        vibe: cleanedVibe,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "person" }
+    );
+
+  if (error) {
+    console.error("Error saving Sher vibe:", error);
+    return;
   }
+
+  setSherVibe(cleanedVibe);
+  setShowVibeEditor(false);
+}
 
   return (
     <main className={`sher-app-page ${isNight ? "night" : "day"}`}>

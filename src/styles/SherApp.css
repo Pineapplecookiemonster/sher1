@@ -665,16 +665,20 @@
 /* /////////////OVERRIDES ////////// */
 
 .day .sher-app-title,
-.day .sher-app-greeting,
-.day .modal-card,
-.day .modal-card p,
-.day .modal-card h1,
-.day .modal-card h2,
-.day .modal-card h3 {
+.day .sher-app-greeting {
   color: #253322 !important;
 }
 
 .night .sher-app-title,
 .night .sher-app-greeting {
   color: #f7efe7 !important;
+}
+
+.modal-card,
+.modal-card p,
+.modal-card h1,
+.modal-card h2,
+.modal-card h3,
+.modal-card strong {
+  color: #253322 !important;
 }
