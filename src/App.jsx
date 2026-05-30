@@ -7,6 +7,7 @@ import Jokes from "./pages/Jokes";
 import JokeLanding from "./pages/JokeLanding";
 import MomentPage from "./pages/momentPage";
 import SherApp from "./pages/SherApp";
+import JosephAdmin from "./pages/JosephAdmin";
 
 export default function App() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -23,6 +24,7 @@ export default function App() {
       {page === "jokelanding" && <JokeLanding setPage={setPage} />}
       {page === "moment" && <MomentPage setPage={setPage}/>}
       {page === "sherapp" && <SherApp setPage={setPage} />}
+      {page === "admin" && <JosephAdmin setPage={setPage} />}
     </>
   );
 }

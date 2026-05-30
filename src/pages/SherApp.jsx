@@ -266,9 +266,14 @@ useEffect(() => {
 
 const manualNotifications = [
   {
-    id: "30/5 part2",
+    id: "30/5 5",
     // title: "new story available",
     text: "poetry section now available",
+  },
+    {
+    id: "30/5 part6",
+    // title: "new story available",
+    text: "vibes are now editable",
   },
 ];
 
