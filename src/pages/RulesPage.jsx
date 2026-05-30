@@ -42,7 +42,7 @@ export default function RulesPage({ setPage }) {
 
         <p className="dc-progress-number">{todayCount}</p>
 
-        <p>moments posted today</p>
+        <p>new moments today</p>
 
         <div className="dc-rules-actions">
           <button
